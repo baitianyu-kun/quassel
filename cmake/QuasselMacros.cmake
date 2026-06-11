@@ -124,11 +124,11 @@ function(quassel_add_executable _target)
         message(FATAL_ERROR "quassel_executable requires a COMPONENT argument with one of the values 'Core', 'Client' or 'Mono'")
     endif()
 
-    add_executable(${_target} ${ARG_SOURCES})
+    add_library(${_target} SHARED ${ARG_SOURCES})
     set_property(TARGET ${_target} APPEND PROPERTY COMPILE_DEFINITIONS ${DEFINE})
     set_target_properties(${_target} PROPERTIES
         RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}
-        WIN32_EXECUTABLE ${WIN32}  # Ignored on non-Windows platforms
+        LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}
     )
     target_link_libraries(${_target} PUBLIC ${ARG_LIBRARIES})  # Link publicly, so plugin detection for bundles work
 

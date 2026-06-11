@@ -66,7 +66,7 @@ if (BUILD_CORE)
 endif()
 
 find_package(Qt6 ${QUASSEL_QT_MIN_VERSION} REQUIRED COMPONENTS ${quassel_qt_components})
-set_package_properties(Qt6 PROPERTIES TYPE REQUIRED
+set_package_properties(Qt6Core PROPERTIES TYPE REQUIRED
     URL "https://www.qt.io/"
     DESCRIPTION "the Qt 6 libraries"
 )
@@ -97,7 +97,7 @@ if (NOT HAVE_SSL)
 endif()
 
 # Optional Qt components
-find_package(Qt6 ${QUASSEL_QT_MIN_VERSION} QUIET COMPONENTS LinguistTools)
+find_package(Qt6LinguistTools ${QUASSEL_QT_MIN_VERSION} QUIET)
 set_package_properties(Qt6LinguistTools PROPERTIES TYPE RECOMMENDED
     DESCRIPTION "contains tools for handling translation files"
     PURPOSE "Required for having translations"
@@ -105,7 +105,7 @@ set_package_properties(Qt6LinguistTools PROPERTIES TYPE RECOMMENDED
 
 if (BUILD_GUI)
     if (NOT WIN32)
-        find_package(Qt6 ${QUASSEL_QT_MIN_VERSION} QUIET COMPONENTS DBus)
+        find_package(Qt6DBus ${QUASSEL_QT_MIN_VERSION} QUIET)
         set_package_properties(Qt6DBus PROPERTIES TYPE RECOMMENDED
             URL "https://www.qt.io/"
             DESCRIPTION "D-Bus support for Qt 6"
@@ -116,7 +116,7 @@ if (BUILD_GUI)
         endif()
     endif()
 
-    find_package(Qt6 ${QUASSEL_QT_MIN_VERSION} QUIET COMPONENTS Multimedia)
+    find_package(Qt6Multimedia ${QUASSEL_QT_MIN_VERSION} QUIET)
     set_package_properties(Qt6Multimedia PROPERTIES TYPE RECOMMENDED
         URL "https://www.qt.io/"
         DESCRIPTION "Multimedia support for Qt 6"
@@ -127,7 +127,8 @@ if (BUILD_GUI)
     endif()
 
     if (WITH_WEBENGINE)
-        find_package(Qt6 ${QUASSEL_QT_MIN_VERSION} REQUIRED COMPONENTS WebEngineCore WebEngineWidgets)
+        find_package(Qt6WebEngineCore ${QUASSEL_QT_MIN_VERSION} REQUIRED)
+        find_package(Qt6WebEngineWidgets ${QUASSEL_QT_MIN_VERSION} REQUIRED)
         set_package_properties(Qt6WebEngineCore PROPERTIES TYPE REQUIRED
             URL "https://www.qt.io/"
             DESCRIPTION "the core WebEngine implementation for Qt"
@@ -200,3 +201,8 @@ function(quassel_qt_add_dbus_adaptor outvar xml header parent_class)
     qt6_add_dbus_adaptor(${outvar} ${xml} ${header} ${parent_class} ${ARGN})
     set(${outvar} ${${outvar}} PARENT_SCOPE)
 endfunction()
+
+if (Qt6Core_FOUND)
+    set(Qt6_FOUND TRUE)
+endif()
+

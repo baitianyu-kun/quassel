@@ -215,7 +215,7 @@ if (BUILD_TESTING)
         PURPOSE "Required for building unit tests"
     )
 
-    find_package(Qt6 ${QUASSEL_QT_MIN_VERSION} QUIET COMPONENTS Test)
+    find_package(Qt6Test ${QUASSEL_QT_MIN_VERSION} QUIET)
     set_package_properties(Qt6Test PROPERTIES TYPE REQUIRED
         DESCRIPTION "unit testing library for the Qt framework"
         PURPOSE "Required for building unit tests"

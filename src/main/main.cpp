@@ -54,7 +54,7 @@
 #include "quassel.h"
 #include "types.h"
 
-int main(int argc, char** argv)
+Q_DECL_EXPORT int main(int argc, char** argv)
 {
     // Set umask so files are created with restricted permissions
 #ifdef HAVE_UMASK
